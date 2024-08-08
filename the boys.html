@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Filme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .movie-header {
+            display: flex;
+            align-items: center;
+        }
+        .movie-header img {
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .movie-header h1 {
+            margin: 0;
+            font-size: 2em;
+            color: #fff;
+        }
+        .movie-header p {
+            margin: 5px 0;
+        }
+        .movie-description {
+            margin-top: 20px;
+        }
+        .season-menu {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .season-menu button {
+            background: #e50914; /* Cor vermelha para o botão de temporadas */
+            border: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .season-menu button:hover {
+            background: #b81d13; /* Cor vermelha mais escura ao passar o mouse */
+        }
+        .season-dropdown {
+            display: none;
+            position: absolute;
+            background: #222;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            width: 200px;
+        }
+        .season-dropdown button {
+            background: #222;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .season-dropdown button:hover {
+            background: #444;
+        }
+        .episodes {
+            display: none;
+            margin-top: 20px;
+        }
+        .episodes ul {
+            list-style: none;
+            padding: 0;
+        }
+        .episodes li {
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .episodes li:hover {
+            text-decoration: underline;
+        }
+        .video-player {
+            display: none; /* Player hidden by default */
+            position: relative;
+            width: 100%;
+            max-width: 640px; /* Size for mobile */
+            margin-top: 20px;
+            background-color: #000;
+            border-radius: 8px;
+            border: 3px solid #e50914; /* Red border around the player */
+            overflow: hidden;
+        }
+        .video-player video {
+            width: 100%;
+            height: auto;
+        }
+        .video-message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.5em;
+            z-index: 10;
+            text-align: center;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2em;
+            color: #e50914;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .back-button::before {
+            content: '←';
+            margin-right: 10px;
+        }
+        .category-section {
+            margin-top: 40px;
+        }
+        .category-section h2 {
+            font-size: 1.8em;
+            color: #fff;
+        }
+        .category-section .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .category-section .category-item {
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            width: calc(33.333% - 20px);
+            box-sizing: border-box;
+        }
+        .category-section .category-item img {
+            width: 100%;
+            height: auto;
+        }
+        .category-section .category-item h3 {
+            margin: 0;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botão de Voltar para Página Inicial -->
+        <a href="index.html" class="back-button">Voltar</a>
+
+        <div class="movie-header">
+            <img src="https://image.tmdb.org/t/p/w185/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg" alt="Capa do Filme">
+            <div>
+                <h1>The Boys</h1>
+                <p><strong>Gênero:</strong> Ação, Aventura</p>
+                <p><strong>Duração:</strong> 60 min</p>
+                <p><strong>Avaliação:</strong> 8.5/10</p>
+            </div>
+        </div>
+        <div class="movie-description">
+            <h2>Sinopse</h2>
+            <p>Na trama, conhecemos um mundo em que super-heróis são as maiores celebridades do planeta, e rotineiramente abusam dos seus poderes ao invés de os usarem para o bem.</p>
+        </div>
+
+        <!-- Mensagem e Player de Vídeo Dinâmico -->
+        <div id="videoPlayer" class="video-player">
+            <video id="videoFrame" controls>
+                <source src="" type="video/mp4" />
+                Seu navegador não suporta o elemento de vídeo.
+            </video>
+        
+            <div class="video-message" id="videoMessage">
+                <h2>Seu filme está pronto para assistir</h2>
+            </div>
+        </div>
+
+        <!-- Menu de Temporadas -->
+        <div class="season-menu">
+            <button onclick="toggleMenu()">Mostrar Temporadas</button>
+            <div id="seasonDropdown" class="season-dropdown">
+                <button onclick="toggleEpisodes('season1')">Temporada 1</button>
+                <button onclick="toggleEpisodes('season2')">Temporada 2</button>
+                <button onclick="toggleEpisodes('season3')">Temporada 3</button>
+                <button onclick="toggleEpisodes('season4')">Temporada 4</button>
+                <button onclick="toggleEpisodes('season5')">Temporada 5</button>
+            </div>
+        </div>
+
+        <!-- Conteúdo das Temporadas e Episódios -->
+        <div id="seasonContent">
+            <!-- Temporada 1 -->
+            <div id="season1" class="episodes">
+                <h2>Temporada 1: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisode('https://encurtador.com.br/1Uxud')">Episódio 1</li>
+                    <li onclick="playEpisode('https://encurtador.com.br/U39Cu')">Episódio 2</li>
+                    <li onclick="playEpisode('https://encurtador.com.br/pfy2p')">Episódio 3</li>
+                </ul>
+            </div>
+
+            <!-- Temporada 2 -->
+            <div id="season2" class="episodes">
+                <h2>Temporada 2: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID4/preview')">Episódio 1</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID5/preview')">Episódio 2</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID6/preview')">Episódio 3</li>
+                </ul>
+            </div>
+
+            <!-- Temporada 3 -->
+            <div id="season3" class="episodes">
+                <h2>Temporada 3: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisode('https://superembeds.com/embed2/76479-3-1')">Episódio 1</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID8/preview')">Episódio 2</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID9/preview')">Episódio 3</li>
+                </ul>
+            </div>
+
+            <!-- Temporada 4 -->
+            <div id="season4" class="episodes">
+                <h2>Temporada 4: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID10/preview')">Episódio 1</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID11/preview')">Episódio 2</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID12/preview')">Episódio 3</li>
+                </ul>
+            </div>
+
+            <!-- Temporada 5 -->
+            <div id="season5" class="episodes">
+                <h2>Temporada 5: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID13/preview')">Episódio 1</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID14/preview')">Episódio 2</li>
+                    <li onclick="playEpisode('https://drive.google.com/file/d/FILE_ID15/preview')">Episódio 3</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Seção de Categorias de Filmes -->
+        <div class="category-section">
+            <h2>Categorias de Filmes</h2>
+            <div class="category-list">
+                <div class="category-item">
+                    <img src="https://image.tmdb.org/t/p/w185/qkhZRqCWqJ376sBzD4MeAO2w4wv.jpg" alt="Categoria 1">
+                    <h3>Ação</h3>
+                </div>
+                <div class="category-item">
+                    <img src="https://via.placeholder.com/400x225" alt="Categoria 2">
+                    <h3>Aventura</h3>
+                </div>
+                <div class="category-item">
+                    <img src="https://via.placeholder.com/400x225" alt="Categoria 3">
+                    <h3>Comédia</h3>
+                </div>
+                <div class="category-item">
+                    <img src="https://via.placeholder.com/400x225" alt="Categoria 4">
+                    <h3>Drama</h3>
+                </div>
+                <div class="category-item">
+                    <img src="https://via.placeholder.com/400x225" alt="Categoria 5">
+                    <h3>Ficção Científica</h3>
+                </div>
+                <div class="category-item">
+                    <img src="https://via.placeholder.com/400x225" alt="Categoria 6">
+                    <h3>Romance</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para exibir a mensagem e o player de vídeo
+        function playEpisode(url) {
+            const videoPlayer = document.getElementById('videoFrame');
+            const videoPlayerContainer = document.getElementById('videoPlayer');
+            const videoMessage = document.getElementById('videoMessage');
+            videoPlayer.src = url;
+            videoPlayerContainer.style.display = 'block';
+            videoMessage.style.display = 'block';
+            videoPlayer.play();
+
+            // Ocultar a mensagem depois que o vídeo começar a tocar
+            videoPlayer.addEventListener('play', function() {
+                videoMessage.style.display = 'none';
+            });
+        }
+
+        // Função para alternar o menu de temporadas
+        function toggleMenu() {
+            const dropdown = document.getElementById('seasonDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Função para alternar a exibição dos episódios de uma temporada
+        function toggleEpisodes(seasonId) {
+            const allEpisodes = document.querySelectorAll('.episodes');
+            allEpisodes.forEach(episode => episode.style.display = 'none');
+
+            const selectedSeason = document.getElementById(seasonId);
+            selectedSeason.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

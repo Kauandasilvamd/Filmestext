@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clone Netflix - Tela Inicial</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #fff;
+        }
+        header {
+            background-color: #000;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            height: 60px;
+            margin: 0;
+        }
+        .signin-btn {
+            background-color: #e50914;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .signin-btn:hover {
+            background-color: #f40612;
+        }
+        .banner {
+            text-align: center;
+            margin: 20px 0;
+            color: #fff;
+            background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1600x600') center center/cover no-repeat;
+            padding: 40px 20px;
+            border-radius: 8px;
+        }
+        .banner h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+        .banner p {
+            font-size: 1.5rem;
+            margin: 10px 0 0;
+        }
+        .category {
+            padding: 20px;
+        }
+        .category h2 {
+            margin-bottom: 10px;
+        }
+        .movie-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+        }
+        .movie-item {
+            flex: 0 0 auto;
+            text-align: center;
+        }
+        .movie-item img {
+            width: 200px;
+            height: 300px;
+            border: 2px solid #333;
+            transition: transform 0.3s;
+        }
+        .movie-item img:hover {
+            transform: scale(1.05);
+        }
+        .em-alta {
+            padding: 20px;
+            background-color: #222;
+        }
+        .em-alta h2 {
+            margin-bottom: 10px;
+        }
+        .em-alta .movie-list {
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 10px 0;
+        }
+        .em-alta .movie-item {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .em-alta .movie-item img {
+            width: 300px;
+            height: 450px;
+            border: 2px solid #333;
+            transition: transform 0.3s;
+        }
+        .em-alta .movie-item img:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #000;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            position: relative;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+        .login-btn {
+            background-color: #e50914;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .close-btn {
+            float: right;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" class="logo">
+            <button class="signin-btn" id="signinBtn">Entrar</button>
+        </div>
+        <div class="banner">
+            <h1>Explorar Novos Conteúdos</h1>
+            <p>Encontre os filmes e séries mais emocionantes.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="em-alta">
+            <h2>Em Alta</h2>
+            <div class="movie-list">
+                <div class="movie-item">
+                    <a href="">
+                        <img src="https://image.tmdb.org/t/p/w185/qkhZRqCWqJ376sBzD4MeAO2w4wv.jpg" alt="Filme Em Alta 1">
+                        <p>Filme Em Alta 1</p>
+                    </a>
+                </div>
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/300x450" alt="Filme Em Alta 2">
+                        <p>Filme Em Alta 2</p>
+                    </a>
+                </div>
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/300x450" alt="Filme Em Alta 3">
+                        <p>Filme Em Alta 3</p>
+                    </a>
+                </div>
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/300x450" alt="Filme Em Alta 4">
+                        <p>Filme Em Alta 4</p>
+                    </a>
+                </div>
+                <!-- Adicione mais itens de filmes conforme necessário -->
+            </div>
+        </section>
+
+        <section class="category">
+            <h2>Ação</h2>
+            <div class="movie-list">
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/200x300" alt="Filme Ação 1">
+                        <p>Filme Ação 1</p>
+                    </a>
+                </div>
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/200x300" alt="Filme Ação 2">
+                        <p>Filme Ação 2</p>
+                    </a>
+                </div>
+                <!-- Adicione mais itens de filmes conforme necessário -->
+            </div>
+        </section>
+
+        <section class="category">
+            <h2>Comédia</h2>
+            <div class="movie-list">
+                <div class="movie-item">
+                    <a href="Deadpool & Wolverine.html">
+                        <img src="https://image.tmdb.org/t/p/w185/qkhZRqCWqJ376sBzD4MeAO2w4wv.jpg" alt="Filme Comédia 1">
+                        <p>Deadpool & Wolverine</p>
+                    </a>
+                </div>
+                <div class="movie-item">
+                    <a href="the boys.html">
+                        <img src="https://image.tmdb.org/t/p/w185/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg" alt="Filme Comédia 2">
+                        <p>The Boys</p>
+                    </a>
+                </div>
+                <!-- Adicione mais itens de filmes conforme necessário -->
+            </div>
+        </section>
+
+        <section class="category">
+            <h2>Drama</h2>
+            <div class="movie-list">
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/200x300" alt="Filme Drama 1">
+                        <p>Filme Drama 1</p>
+                    </a>
+                </div>
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/200x300" alt="Filme Drama 2">
+                        <p>Filme Drama 2</p>
+                    </a>
+                </div>
+                <!-- Adicione mais itens de filmes conforme necessário -->
+            </div>
+        </section>
+
+        <section class="category">
+            <h2>Ficção Científica</h2>
+            <div class="movie-list">
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/200x300" alt="Filme Ficção Científica 1">
+                        <p>Filme Ficção Científica 1</p>
+                    </a>
+                </div>
+                <div class="movie-item">
+                    <a href="detalhes-filme.html">
+                        <img src="https://via.placeholder.com/200x300" alt="Filme Ficção Científica 2">
+                        <p>Filme Ficção Científica 2</p>
+                    </a>
+                </div>
+                <!-- Adicione mais itens de filmes conforme necessário -->
+            </div>
+        </section>
+        
+        <!-- Mensagem de sucesso -->
+        <div id="successMessage" class="success-message">
+            Você entrou com sucesso!
+        </div>
+    </main>
+
+    <footer>
+        <p>Desenvolvido por [Seu Nome]</p>
+    </footer>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Entrar</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const loginModal = document.getElementById('loginModal');
+        const closeModalBtn = document.querySelector('.close-btn');
+        const signinBtn = document.getElementById('signinBtn');
+        const loginForm = document.getElementById('loginForm');
+        const successMessage = document.getElementById('successMessage');
+
+        signinBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Simular o processo de login
+            // Aqui você pode adicionar lógica real de autenticação
+
+            // Exibir a mensagem de sucesso
+            successMessage.style.display = 'block';
+
+            // Ocultar o botão "Entrar" após o login
+            signinBtn.style.display = 'none';
+
+            // Fechar o modal após o login
+            loginModal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
